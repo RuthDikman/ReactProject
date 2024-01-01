@@ -1,95 +1,86 @@
-import * as React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import Avatar from '@mui/material/Avatar';
-import Divider from '@mui/material/Divider';
-import PhoneIcon from '@mui/icons-material/Phone';
-import HomeIcon from '@mui/icons-material/Home';
-import BusinessIcon from '@mui/icons-material/Business';
-import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
-import DetailsIcon from '@mui/icons-material/Details';
-import { useState, useEffect } from 'react';
-function BusinessDetails() {
-  const [businessDetails, setBusinessDetails] = useState(null);
-  useEffect(() => {
-    const fetchData = async () => {
-      const details = await handleGetBusiness();
-      setBusinessDetails(details);
-    };
-    fetchData();
-  }, []);
-  const handleGetBusiness = async () => {
-    const response = await fetch("http://localhost:8787/businessData", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    if (response.status === 200) {
-      const business = await response.json();
-      return business; 
-    } else {
-      console.log("Error fetching business details");
-      return null; 
-    }
-  };
-
+import * as React from "react";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import ListItemAvatar from "@mui/material/ListItemAvatar";
+import Avatar from "@mui/material/Avatar";
+import Divider from "@mui/material/Divider";
+import PhoneIcon from "@mui/icons-material/Phone";
+import HomeIcon from "@mui/icons-material/Home";
+import BusinessIcon from "@mui/icons-material/Business";
+import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
+import DetailsIcon from "@mui/icons-material/Details";
+import AppStore from "../../store/AppStore";
+import { observer } from "mobx-react";
+const BusinessDetails = observer(() => {
   return (
     <List
       sx={{
-        width: '100%',
+        width: "100%",
         maxWidth: 250,
-        bgcolor: 'background.paper',
+        bgcolor: "background.paper",
       }}
     >
       <ListItem>
         <ListItemAvatar>
-          <Avatar>
+          <Avatar style={{ backgroundColor: "#e59173" }}>
             <BusinessIcon />
           </Avatar>
         </ListItemAvatar>
-        <ListItemText primary={businessDetails===null?"null": businessDetails.name} secondary="שם העסק"/>
+        <ListItemText
+          primary={AppStore.listBusinessData.name}
+          secondary="שם העסק"
+        />
       </ListItem>
       <Divider variant="inset" component="li" />
       <ListItem>
         <ListItemAvatar>
-          <Avatar>
+          <Avatar style={{ backgroundColor: "#e59173" }}>
             <PersonOutlineIcon />
           </Avatar>
         </ListItemAvatar>
-        <ListItemText primary={businessDetails===null?"null": businessDetails.owner} secondary="בעל העסק" />
+        <ListItemText
+          primary={AppStore.listBusinessData.owner}
+          secondary="בעל העסק"
+        />
       </ListItem>
       <Divider variant="inset" component="li" />
       <ListItem>
         <ListItemAvatar>
-          <Avatar>
-          <PhoneIcon />
+          <Avatar style={{ backgroundColor: "#e59173" }}>
+            <PhoneIcon />
           </Avatar>
         </ListItemAvatar>
-        <ListItemText primary={businessDetails===null?"null": businessDetails.phone} secondary="טלפון" />
+        <ListItemText
+          primary={AppStore.listBusinessData.phone}
+          secondary="טלפון"
+        />
       </ListItem>
       <Divider variant="inset" component="li" />
       <ListItem>
         <ListItemAvatar>
-          <Avatar>
+          <Avatar style={{ backgroundColor: "#e59173" }}>
             <HomeIcon />
           </Avatar>
         </ListItemAvatar>
-        <ListItemText primary={businessDetails===null?"null": businessDetails.address} secondary="כתובת" />
+        <ListItemText
+          primary={AppStore.listBusinessData.address}
+          secondary="כתובת"
+        />
       </ListItem>
       <Divider variant="inset" component="li" />
       <ListItem>
         <ListItemAvatar>
-          <Avatar>
+          <Avatar style={{ backgroundColor: "#e59173" }}>
             <DetailsIcon />
           </Avatar>
         </ListItemAvatar>
-        <ListItemText primary={businessDetails===null?"null": businessDetails.description} secondary="פרטים נוספים" />
+        <ListItemText
+          primary={AppStore.listBusinessData.description}
+          secondary="פרטים נוספים"
+        />
       </ListItem>
     </List>
   );
-}
-export default BusinessDetails
+});
+export default BusinessDetails;

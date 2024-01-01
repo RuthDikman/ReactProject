@@ -1,0 +1,32 @@
+.bodyComponnent{
+    position:fixed;
+     left:0;
+     top:25%;
+}
+.tabsBodey{
+    position:absolute;
+    left: 40%;
+    top: 20%;
+    display:flex;
+    justify-content:space-between;
+}
+.tab{
+    color: #3c91e6  !important;
+    font-size: 100%  !important;
+    font-weight: bold  !important;
+}
+@media screen and (max-width:900px) {
+    .table {
+      max-width: 30%;
+    }
+  }
+  @media screen and (max-width: 850px) {
+    .table {
+      max-width:25%;
+    }
+  }
+  @media screen and (max-width:600px) {
+    .table {
+      max-width:20%;
+    }
+  }

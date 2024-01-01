@@ -1,51 +1,60 @@
-import { observer } from "mobx-react"
-import AppStore from "../../store/AppStore"
-import React from 'react';
-import Switch from '@material-ui/core/Switch';
+import "./cssAdmin/AdminHomePage.css";
+import { observer } from "mobx-react";
+import Store from "../../store/Store";
+import React from "react";
+import Switch from "@material-ui/core/Switch";
 import BusinessDetails from "../businessDetails/BusinessDetails";
 import EditBusinessDetails from "../businessDetails/EditBusinessDetails";
-import Button from '@mui/material/Button';
-import SendIcon from '@mui/icons-material/Send';
-import Stack from '@mui/material/Stack';
-import { Outlet, Link } from "react-router-dom"
-const AdminHomePage = (observer(() => {
-    const [state, setState] = React.useState({
-        checkedB: false,
-      });
-      const handleChange = (event) => {
-        setState({ ...state, [event.target.name]: event.target.checked });
-        AppStore.setIsedit(!AppStore.isEdit);
-      };
-    return (
-        <>
-         <div style={{position:'absolute', left:'0',top:'25%' }}>
-        {!AppStore.isEdit ?
-               <BusinessDetails /> :
-                <EditBusinessDetails />
-            }
-      <Switch
-        checked={state.checkedB}
-        onChange={handleChange}
-        color="primary"
-        name="checkedB"
-        inputProps={{ 'aria-label': 'primary checkbox' }}
-      />
-            </div>
-            <Stack direction="column" spacing={10} position={"absolute"} left={"20%"} top={"40%"}>
-            <Link to="./services">
-            <Button variant="contained" endIcon={<SendIcon />}>
-              רשימת שירותים
-            </Button>
-            </Link>
-            <Link to="./orders">
-            <Button variant="contained" endIcon={<SendIcon />}>
-              רשימת הזמנות
-            </Button>
-            </Link>
-          </Stack>
-          <Outlet />
-        </>   
-    )
-}))
+import { Outlet, Link } from "react-router-dom";
+import { useState } from "react";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import DvrIcon from "@mui/icons-material/Dvr";
+import SettingsSuggestIcon from "@mui/icons-material/SettingsSuggest";
+const AdminHomePage = observer(() => {
+  const [state, setState] = useState({
+    checkedB: false,
+  });
+  const handleChange = (event) => {
+    setState({ ...state, [event.target.name]: event.target.checked });
+    Store.setIsedit(!Store.isEdit);
+  };
+  return (
+    <>
+      <div className="bodyComponnent">
+        {!Store.isEdit ? <BusinessDetails /> : <EditBusinessDetails />}
+        <Switch
+          checked={state.checkedB}
+          onChange={handleChange}
+          color="black"
+          name="checkedB"
+          inputProps={{ "aria-label": "primary checkbox" }}
+        />
+      </div>
+      <Tabs
+        value={1}
+        aria-label="icon label tabs example"
+        className="tabsBodey"
+      >
+        <Link to="./services">
+          <Tab
+            value={1}
+            icon={<SettingsSuggestIcon style={{ fontSize: "3rem" }} />}
+            label="List of services"
+            className="tab"
+          />
+        </Link>
+        <Link to="./orders">
+          <Tab
+            icon={<DvrIcon style={{ fontSize: "3rem" }} />}
+            label="List of orders"
+            className="tab"
+          />
+        </Link>
+      </Tabs>
+      <Outlet />
+    </>
+  );
+});
 
-export default AdminHomePage
+export default AdminHomePage;

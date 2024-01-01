@@ -1,35 +1,34 @@
-import * as React from 'react';
-import CssBaseline from '@mui/material/CssBaseline';
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import Paper from '@mui/material/Paper';
-import Stepper from '@mui/material/Stepper';
-import Step from '@mui/material/Step';
-import StepLabel from '@mui/material/StepLabel';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import AddressForm from './AddressForm';
-import PaymentForm from './PaymentForm';
-import Review from './Review';
+import * as React from "react";
+import CssBaseline from "@mui/material/CssBaseline";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import Paper from "@mui/material/Paper";
+import Stepper from "@mui/material/Stepper";
+import Step from "@mui/material/Step";
+import StepLabel from "@mui/material/StepLabel";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import AddressForm from "./AddressForm";
+import PaymentForm from "./PaymentForm";
+import Review from "./Review";
 
-const steps = ['Shipping address', 'Payment details', 'Review your order'];
-
-function getStepContent(step) {
+const steps = ["Shipping address", "Payment details", "Review your order"];
+function getStepContent(step, handleChangeOrder) {
   switch (step) {
     case 0:
-      return <AddressForm />;
+      return <AddressForm handleChangeOrder={handleChangeOrder} />;
     case 1:
       return <PaymentForm />;
     case 2:
       return <Review />;
     default:
-      throw new Error('Unknown step');
+      throw new Error("Unknown step");
   }
 }
 
-function DeliveryOrder() {
+function DeliveryOrder(props) {
   const [activeStep, setActiveStep] = React.useState(0);
-
+  const handleChangeOrder = props.handleChangeOrder;
   const handleNext = () => {
     setActiveStep(activeStep + 1);
   };
@@ -37,18 +36,20 @@ function DeliveryOrder() {
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
-
   return (
     <React.Fragment>
       <CssBaseline />
       <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
-        <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
+        <Paper
+          variant="outlined"
+          sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}
+        >
           <Typography component="h1" variant="h4" align="center">
-            Checkout
+            השלמת הזמנה
           </Typography>
           <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
-            {steps.map((label) => (
-              <Step key={label}>
+            {steps.map((label, index) => (
+              <Step key={index}>
                 <StepLabel>{label}</StepLabel>
               </Step>
             ))}
@@ -66,8 +67,8 @@ function DeliveryOrder() {
             </React.Fragment>
           ) : (
             <React.Fragment>
-              {getStepContent(activeStep)}
-              <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+              {getStepContent(activeStep, handleChangeOrder)}
+              <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
                 {activeStep !== 0 && (
                   <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
                     Back
@@ -78,9 +79,8 @@ function DeliveryOrder() {
                   onClick={handleNext}
                   sx={{ mt: 3, ml: 1 }}
                 >
-                  {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
+                  {activeStep === steps.length - 1 ? "Place order" : "Next"}
                 </Button>
-                
               </Box>
             </React.Fragment>
           )}
@@ -89,4 +89,5 @@ function DeliveryOrder() {
     </React.Fragment>
   );
 }
-export default DeliveryOrder
+
+export default DeliveryOrder;

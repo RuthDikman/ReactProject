@@ -1,0 +1,18 @@
+.table{
+  width: 75%;
+   overflow:hidden;
+   position:absolute;
+    right:3%;
+    top:35%    
+}
+  .icon {
+    color: #73ace6;
+    margin-bottom: 10px;
+    font-size: 10rem !important;
+  }
+  
+  .message {
+    color: #555;
+    font-weight: bold;
+    font-size: xx-large;
+  }
